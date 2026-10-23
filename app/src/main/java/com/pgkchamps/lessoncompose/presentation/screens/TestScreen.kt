@@ -28,6 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pgkchamps.lessoncompose.data.Car
 import com.pgkchamps.lessoncompose.data.FuelType
+import com.pgkchamps.lessoncompose.data.addDownhillSpeed
+import com.pgkchamps.lessoncompose.data.resetStraightSpeed
 
 @Composable
 fun TestScreen(
@@ -35,6 +37,8 @@ fun TestScreen(
     onFuelChanged: (FuelType) -> Unit,
     onResetClicked: () -> Unit // <-- Новое событие для кнопки сброса
 ) {
+    var isDownhill by remember { mutableStateOf(false) }
+    var currentCar by remember { mutableStateOf(car) }
     var selectedFuel by remember { mutableStateOf(car.oil) }
     var isMenuExpanded by remember { mutableStateOf(false) }
 
@@ -48,8 +52,29 @@ fun TestScreen(
         Text(text = "Марка: ${car.brand}", fontSize = 20.sp)
         Text(text = "Модель: ${car.mark}", fontSize = 20.sp)
         Text(text = "Пробег: ${car.milliage} км", fontSize = 20.sp)
-        Text(text = "Макс. скорость: ${car.topSpeed} км/ч", fontSize = 20.sp)
+        Text(text = "Макс. скорость: ${currentCar.topSpeed} км/ч", fontSize = 20.sp)
 
+        Button(
+            onClick = {
+                if (!isDownhill) {
+                    // Если еще не на горке: прибавляем 20 и переключаем флаг
+                    currentCar = currentCar.addDownhillSpeed()
+                    isDownhill = true
+                } else {
+                    // Если уже с горки: убавляем 20 и возвращаем флаг обратно
+                    currentCar = currentCar.resetStraightSpeed()
+                    isDownhill = false
+                }
+            }
+        ) {
+            Text(
+                text = if (isDownhill) {
+                    "Скорость по прямой (-20 км/ч)"
+                } else {
+                    "Скорость с горки (+20 км/ч)"
+                }
+            )
+        }
         // Выбор топлива
         Box(
             modifier = Modifier

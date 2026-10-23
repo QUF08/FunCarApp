@@ -10,6 +10,12 @@ data class Car(
     val brand: String,
     val mark: String,
     var milliage: Int,
-    val topSpeed: Int,
+    var topSpeed: Int,
     var oil: FuelType
 )
+fun Car.addDownhillSpeed(): Car {
+    return this.copy(topSpeed = this.topSpeed + 20)
+}
+fun Car.resetStraightSpeed(): Car {
+    return this.copy(topSpeed = this.topSpeed - 20)
+}

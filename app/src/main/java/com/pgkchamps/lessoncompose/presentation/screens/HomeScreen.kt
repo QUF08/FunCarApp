@@ -53,7 +53,7 @@ fun HomeScreen(onCarCreated: (Car) -> Unit) {
         OutlinedTextField(
             value = brand,
             onValueChange = { brand = it },
-            label = { Text("Марка (например, Toyota)") },
+            label = { Text("Марка авто (например, LADA (VAZ))") },
             modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
             singleLine = true
 
@@ -63,7 +63,7 @@ fun HomeScreen(onCarCreated: (Car) -> Unit) {
         OutlinedTextField(
             value = mark,
             onValueChange = { mark = it },
-            label = { Text("Модель (например, Camry)") },
+            label = { Text("Модель (например, 2108)") },
             modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
             singleLine = true
 
